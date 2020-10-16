@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="HighWay"><meta name="copyright" content="HighWay"><meta name="generator" content="Hexo 5.2.0"><meta name="theme" content="hexo-theme-yun"><title>Public Key Infrastructure | 小莫神的blog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.21/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_ed8vp4atwoj.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script><script>document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "\\(", right: "\\)", display: false},
+      {left: "\\[", right: "\\]", display: true}
+    ]
+  });
+});</script><link rel="shortcut icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"iljava.gitee.io","root":"/","title":["小莫","神","的","blog"],"version":"1.2.0","mode":"auto","copycode":true,"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"/data/sentences.json"},"fireworks":{"colors":["143,196,233","128,149,207","220,190,236"]}};
+  </script><link rel="preconnect" href="https://www.google-analytics.com" crossorigin><script async src="https://www.googletagmanager.com/gtag/js?id=UA-121354150-1"></script><script>if (CONFIG.hostname === location.hostname) {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-121354150-1');
+}</script><script data-ad-client="ca-pub-2245427233262012" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(function(){
+  var bp = document.createElement('script');
+  var curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https') {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})();</script><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-M9KWR9L');</script><!-- End Google Tag Manager --><meta name="description" content="Public Key Infrastructure1、PKI概述名称：Public Key Infrastructure 公钥基础设施 作用：通过加密技术和数字签名保证信息的安全 组成：公钥机密技术、数字证书、CA、RA 2、信息安全三要素 机密性 完整性 身份验证&#x2F;操作的不可否认性  3、哪些IT领域用到PKI1）SSL&#x2F;HTTPS 2）IPsecVPN 3）部分远程访问VPN 4、公钥加密技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Public Key Infrastructure">
+<meta property="og:url" content="https://iljava.gitee.io/2020/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Public%20Key%20Infrastructure/index.html">
+<meta property="og:site_name" content="小莫神的blog">
+<meta property="og:description" content="Public Key Infrastructure1、PKI概述名称：Public Key Infrastructure 公钥基础设施 作用：通过加密技术和数字签名保证信息的安全 组成：公钥机密技术、数字证书、CA、RA 2、信息安全三要素 机密性 完整性 身份验证&#x2F;操作的不可否认性  3、哪些IT领域用到PKI1）SSL&#x2F;HTTPS 2）IPsecVPN 3）部分远程访问VPN 4、公钥加密技术">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/NtlTSe7uFXrJOZ5.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/txzo7UreHDlFVmO.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/AYIRJa6NjTlxLPt.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/XzaP3nhFK2ETZod.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/Q8W3sC1DnqaG4yf.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/lGk2HYymRodje8x.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/zUD8ExtyVKjYRoX.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/98IhwmA2Si6BPKo.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/Wui79gK6IGeYUPk.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/EaMTNwVGrxF65ZJ.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/dlkBE8Sg5XLJKIz.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/zymL7rTRfNkho59.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/16/LN6MSsqYbFCzX7T.png">
+<meta property="article:published_time" content="2020-10-16T09:08:38.000Z">
+<meta property="article:modified_time" content="2020-10-16T09:13:44.582Z">
+<meta property="article:author" content="HighWay">
+<meta property="article:tag" content="PKI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/10/16/NtlTSe7uFXrJOZ5.png"><script src="/js/ui/mode.js"></script><link id="light-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.20.0/themes/prism.css" media="(prefers-color-scheme: light)"><link id="dark-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.20.0/themes/prism-tomorrow.css" media="(prefers-color-scheme: dark)"></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="HighWay"><img width="96" loading="lazy" src="http://qhrwcrmwk.hn-bkt.clouddn.com/avatar.jpg" alt="HighWay"></a><div class="site-author-name"><a href="/about/">HighWay</a></div><a class="site-name" href="/about/site.html">小莫神的blog</a><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">54</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">14</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">27</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/highwayMo" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=360696322" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://www.zhihu.com/people/highway-60-82" title="知乎" target="_blank" style="color:#0084FF"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhihu-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/177996574?spm_id_from=333.851.b_696e7465726e6174696f6e616c486561646572.10" title="哔哩哔哩" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/girls/" title="喜欢的女孩子" style="color:hotpink"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-women-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Public-Key-Infrastructure"><span class="toc-number">1.</span> <span class="toc-text">Public Key Infrastructure</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81PKI%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1、PKI概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">1.2.</span> <span class="toc-text">2、信息安全三要素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%93%AA%E4%BA%9BIT%E9%A2%86%E5%9F%9F%E7%94%A8%E5%88%B0PKI"><span class="toc-number">1.3.</span> <span class="toc-text">3、哪些IT领域用到PKI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%85%AC%E9%92%A5%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF"><span class="toc-number">1.4.</span> <span class="toc-text">4、公钥加密技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E6%91%98%E8%A6%81"><span class="toc-number">1.4.1.</span> <span class="toc-text">数字摘要</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="toc-number">1.5.</span> <span class="toc-text">5、数字签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86"><span class="toc-number">1.5.1.</span> <span class="toc-text">数字签名原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E8%AF%81%E4%B9%A6"><span class="toc-number">1.6.</span> <span class="toc-text">6、证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">证书应运而生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%80%BB%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">7.总结</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://iljava.gitee.io/2020/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Public%20Key%20Infrastructure/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="HighWay"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="小莫神的blog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Public Key Infrastructure<a class="post-edit-link" href="https://github.com/YunYouJun/yunyoujun.github.io/tree/hexo/source/_posts/网络安全/Public Key Infrastructure.md" target="_blank" title="编辑" rel="noopener"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-edit-line"></use></svg></a></h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2020-10-16 17:08:38" itemprop="dateCreated datePublished" datetime="2020-10-16T17:08:38+08:00">2020-10-16</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="本文字数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="本文字数">3.3k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读时长"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="阅读时长">11m</span></span></span><span class="leancloud_visitors" id="/2020/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Public%20Key%20Infrastructure/" data-flag-title="Public Key Infrastructure"><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="阅读次数"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-eye-line"></use></svg> <span class="leancloud-visitors-count"></span></span></span><div class="post-classify"><span class="post-category"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span> <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">网络安全</span></a></span> > <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%8D%83%E5%B3%B0%E5%AE%89%E5%85%A8/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">千峰安全</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag" href="/tags/PKI/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">PKI</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h1 id="Public-Key-Infrastructure"><a href="#Public-Key-Infrastructure" class="headerlink" title="Public Key Infrastructure"></a>Public Key Infrastructure</h1><h2 id="1、PKI概述"><a href="#1、PKI概述" class="headerlink" title="1、PKI概述"></a>1、PKI概述</h2><p>名称：<strong>Public Key Infrastructure</strong> 公钥基础设施</p>
+<p>作用：通过加密技术和数字签名保证信息的安全</p>
+<p>组成：公钥机密技术、数字证书、CA、RA</p>
+<h2 id="2、信息安全三要素"><a href="#2、信息安全三要素" class="headerlink" title="2、信息安全三要素"></a>2、信息安全三要素</h2><ol>
+<li>机密性</li>
+<li>完整性</li>
+<li>身份验证/操作的不可否认性</li>
+</ol>
+<h2 id="3、哪些IT领域用到PKI"><a href="#3、哪些IT领域用到PKI" class="headerlink" title="3、哪些IT领域用到PKI"></a>3、哪些IT领域用到PKI</h2><p>1）SSL/HTTPS</p>
+<p>2）IPsecVPN</p>
+<p>3）部分远程访问VPN</p>
+<h2 id="4、公钥加密技术"><a href="#4、公钥加密技术" class="headerlink" title="4、公钥加密技术"></a>4、公钥加密技术</h2><p>作用：实现对信息加密、数字签名等安全保障</p>
+<p>加密算法：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/211953?fr=aladdin">对称加密算法</a></li>
+</ul>
+<p>对称加密算法的特点是算法公开、计算量小、加密速度快、加密效率高。</p>
+<p>不足之处是，交易双方都使用同样钥匙，安全性得不到保证。此外，每对用户每次使用对称加密算法时，都需要使用其他人不知道的<strong>惟一</strong>钥匙，这会使得发收信双方所拥有的钥匙数量呈几何级数增长，<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AF%86%E9%92%A5%E7%AE%A1%E7%90%86">密钥管理</a>成为用户的负担。对称加密算法在分布式网络系统上使用较为困难，主要是因为密钥管理困难，使用成本较高。而与<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%85%AC%E5%BC%80%E5%AF%86%E9%92%A5">公开密钥</a>加密算法比起来，对称加密算法能够提供加密和认证，却<strong>缺乏签名功能</strong>，使得使用范围有所缩小。 </p>
+<p>详细的算法介绍请点击小标题，或自行查阅相关资料。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95">非对称加密算法</a></li>
+</ul>
+<p>通信双方各自产生一对公私钥</p>
+<p>双方各自交换公钥</p>
+<p>公钥和私钥互为加解密关系！</p>
+<p>公私钥不可互相逆推！</p>
+<p>RSA DH</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/Hash/390310?fr=aladdin">HASH算法</a></li>
+</ul>
+<p>MD5 SHA（不可逆,验证完整性）</p>
+<p>HASH值 = <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%97%E6%91%98%E8%A6%81">数字摘要</a></p>
+<h3 id="数字摘要"><a href="#数字摘要" class="headerlink" title="数字摘要"></a>数字摘要</h3><p>采用单向<strong>Hash</strong>函数将需加密的明文<strong>摘要</strong>成一串128bit的密文，这一串密文亦称为<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%97%E6%8C%87%E7%BA%B9/4418985">数字指纹</a>(Finger Print)，它有固定的长度，且不同的明文<strong>摘要</strong>成密文，其结果总是不同的，而同样的明文其摘要必定一致。</p>
+<h2 id="5、数字签名"><a href="#5、数字签名" class="headerlink" title="5、数字签名"></a>5、数字签名</h2><p>用一个简单的公式感性的理解一下吧<br>$$数字签名= 非对称加密(数字摘要Hash(原文))$$</p>
+<blockquote>
+<p>发送报文时，发送方用一个<strong>Hash</strong>函数从报文文本中生成<strong>报文摘要</strong>也就是上面刚刚提到的<strong>数字摘要</strong>，然后用发送方的私钥对这个<strong>摘要</strong>进行加密，这个加密后的<strong>摘要</strong>将作为报文的数字签名和报文一起发送给接收方，接收方首先用与发送方一样的<strong>Hash</strong>函数从接收到的原始报文中计算出报文摘要，接着公钥对报文附加的<strong>数字签名</strong>进行解密，如果这两个<strong>数字摘要</strong>相同、那么接收方就能确认该报文是发送方的。</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D">数字签名</a>有两种功效：一是能确定消息确实是由发送方签名并发出来的，因为别人假冒不了发送方的签名。二是数字签名能确定消息的完整性。因为数字签名的特点是它代表了文件的特征，文件如果发生改变，数字摘要的值也将发生变化。不同的文件将得到不同的数字摘要。 一次数字签名涉及到一个<strong>Hash</strong>函数、接收者的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%85%AC%E9%92%A5">公钥</a>、发送方的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%A7%81%E9%92%A5">私钥</a>。</p>
+</blockquote>
+<h3 id="数字签名原理"><a href="#数字签名原理" class="headerlink" title="数字签名原理"></a>数字签名原理</h3><ol>
+<li><strong>鲍勃</strong>有两把钥匙，一把是公钥，另一把是私钥。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/NtlTSe7uFXrJOZ5.png" alt="1.png" style="zoom: 100%;" / loading="lazy">
+
+
+
+<ol start="2">
+<li><strong>鲍勃</strong>把公钥送给他的朋友们—-<strong>帕蒂</strong> 、<strong>道格</strong>、 <strong>苏珊</strong> —-每人一把。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/txzo7UreHDlFVmO.png" alt="2.jpg" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="3">
+<li><strong>苏珊</strong>要给<strong>鲍勃</strong>写一封保密的信。她写完后用<strong>鲍勃</strong>的公钥加密，就可以达到保密的效果。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/AYIRJa6NjTlxLPt.png" alt="3.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="4">
+<li><strong>鲍勃</strong>收信后，用私钥解密，就看到了信件内容。这里要强调的是，只要<strong>鲍勃</strong>的私钥不泄露，这封信就是安全的，即使落在别人手里，也无法解密。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/XzaP3nhFK2ETZod.png" alt="4.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="5">
+<li><strong>鲍勃</strong>给<strong>苏珊</strong>回信，决定采用“数字签名”。他写完后先用Hash函数，生成信件的摘要（digest）。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/Q8W3sC1DnqaG4yf.png" alt="5.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="6">
+<li>然后，<strong>鲍勃</strong>使用私钥，对这个摘要加密，生成“<strong>数字签名</strong>”（signature）。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/lGk2HYymRodje8x.png" alt="6.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="7">
+<li><strong>鲍勃</strong>将这个签名，附在信件下面，一起发给<strong>苏珊</strong>。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/zUD8ExtyVKjYRoX.png" alt="7.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="8">
+<li><strong>苏珊</strong>收信后，取下数字签名，用<strong>鲍勃</strong>的公钥解密，得到信件的摘要。由此证明，这封信确实是<strong>鲍勃</strong>发出的。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/98IhwmA2Si6BPKo.png" alt="8.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="9">
+<li><strong>苏珊</strong>再对信件本身使用Hash函数，将得到的结果，与上一步得到的摘要进行对比。如果两者一致，就证明这封信未被修改过。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/Wui79gK6IGeYUPk.png" alt="9.png" style="zoom:100%;" / loading="lazy">
+
+<p>到此为止保证的是我们的信息没有被黑客们<strong>篡改</strong>，但是有一个问题出现了，黑客们不<strong>篡改</strong>我们的信息了，黑客直接变身为<strong>服务器</strong>该怎么办呢？</p>
+<p>在<strong>HTTP</strong>通信中，只要<strong>hacker</strong>也生成一对公密钥也能冒充服务器，那么如何判断这一对公密钥是<strong>真正的服务器</strong>的呢？(实际上客户机能拿到的只有服务器的公钥)所以问题在于怎么判断<strong>公钥</strong>是服务器的呢？</p>
+<p>证书应运而生，只要判断证书是真的，那么证书里的公钥也是真的了。</p>
+<h2 id="6、证书"><a href="#6、证书" class="headerlink" title="6、证书"></a>6、证书</h2><p>证书用于保证公密钥的合法性</p>
+<p>证书格式遵循X.509标准</p>
+<p>数字证书保护信息：</p>
+<p>使用者的公钥值</p>
+<p>使用者标识信息（如名称和电子邮件地址）</p>
+<p>有效期（证书的有效时间）</p>
+<p>颁发者标识信息</p>
+<p>颁发者的数字签名</p>
+<p>数字证书由权威公正的 第三方机构即CA签发</p>
+<p>先来看看图解，接数字签名的部分继续</p>
+<h3 id="证书应运而生"><a href="#证书应运而生" class="headerlink" title="证书应运而生"></a>证书应运而生</h3><p><strong>道格</strong>也就是我们所说的黑客啦O(∩_∩)O</p>
+<ol start="10">
+<li>复杂的情况出现了。<strong>道格</strong>想欺骗<strong>苏珊</strong>，他偷偷使用了<strong>苏珊</strong>的电脑，用自己的公钥换走了<strong>鲍勃</strong>的公钥。此时，<strong>苏珊</strong>实际拥有的是<strong>道格</strong>的公钥，但是还以为这是<strong>鲍勃</strong>的公钥。因此，<strong>道格</strong>就可以冒充<strong>鲍勃</strong>，用自己的私钥做成“<strong>数字签名</strong>”，写信给<strong>苏珊</strong>，让<strong>苏珊</strong>用假的<strong>鲍勃</strong>公钥进行解密。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/EaMTNwVGrxF65ZJ.png" alt="10.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="11">
+<li>后来，<strong>苏珊</strong>感觉不对劲，发现自己无法确定公钥是否真的属于<strong>鲍勃</strong>。她想到了一个办法，要求<strong>鲍勃</strong>去找“证书中心”（certificate authority，简称CA），为公钥做认证。证书中心用自己的私钥，对<strong>鲍勃</strong>的公钥和一些相关信息一起加密，生成“<strong>数字证书</strong>”（Digital Certificate）。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/dlkBE8Sg5XLJKIz.png" alt="11.png" style="zoom:100%;" / loading="lazy">
+
+<p>证书的出现就是为了证明这个公钥是<strong>鲍勃</strong>的，而不是<strong>道格</strong>的。</p>
+<p>那么怎么证明这份证书是<strong>可信任</strong>的呢？万一<strong>道格</strong>偷偷又换了一份自己发明的证书呢？那不是又没了？</p>
+<p>其实解决的方案跟数字签名时差不多，只是这些颁发证书的机构<strong>CA</strong>是权威的而且是有能力维护安全的，在安装系统的同时这些机构的证书就已经被安装在电脑上了。 </p>
+<p><strong>苏珊</strong>让<strong>鲍勃</strong>证明自己的身份，<strong>鲍勃</strong>用自己的私钥加密一段内容连同明文一起发给<strong>苏珊</strong>后，<strong>苏珊</strong>把加密内容用数字证书中的公钥解密后和明文对比，如果一致，那么对方就确实是<strong>鲍勃</strong>了。</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/472becb92e5c">数字证书原理</a>此文循序渐进，通俗易懂，非常推荐阅读学习。</p>
+<p>摘取部分精彩内容</p>
+<blockquote>
+<p>完整过程：</p>
+<p><strong>step1</strong>： “客户”向服务端发送一个通信请求</p>
+<p>“客户”-&gt;“服务器”：你好</p>
+<p><strong>step2</strong>： “服务器”向客户发送自己的<strong>数字证书</strong>。证书中有一个公钥用来加密信息，私钥由“服务器”持有</p>
+<p>“服务器”-&gt;“客户”：你好，我是服务器，这里是我的数字证书</p>
+<p><strong>step3</strong>： “客户”收到“服务器”的证书后，它会去验证这个数字证书到底是不是“服务器”的，数字证书有没有什么问题，数字证书如果检查没有问题，就说明数字证书中的公钥确实是“服务器”的。检查数字证书后，“客户”会发送一个<strong>随机的字符串</strong>给“服务器”用私钥去加密，服务器把加密的结果返回给“客户”，“客户”用公钥解密这个返回结果，如果解密结果与之前<strong>生成的随机字符串</strong>一致，那说明对方确实是私钥的持有者，或者说对方确实是“服务器”。</p>
+<p>“客户”-&gt;“服务器”：向我证明你就是服务器，这是一个随机字符串//前面的例子中为了方便解释，用的是“你好”等内容，实际情况下一般是随机生成的一个字符串。</p>
+<p>“服务器”-&gt;“客户”：{一个<strong>随机字符串</strong>}[私钥|RSA]</p>
+<p><strong>step4</strong>： 验证“服务器”的身份后，“客户”生成一个对称加密算法和密钥，用于后面的通信的加密和解密。这个对称加密算法和密钥，“客户”会用公钥加密后发送给“服务器”，别人截获了也没用，因为只有“服务器”手中有可以解密的私钥。这样，后面“服务器”和“客户”就都可以用对称加密算法来加密和解密通信内容了。</p>
+<p>“服务器”-&gt;“客户”：{OK，已经收到你发来的对称加密算法和密钥！有什么可以帮到你的？}[密钥|对称加密算法]</p>
+<p>“客户”-&gt;“服务器”：{我的帐号是aaa，密码是123，把我的余额的信息发给我看看}[密钥|对称加密算法]</p>
+<p>“服务器”-&gt;“客户”：{你好，你的余额是100元}[密钥|对称加密算法]</p>
+<p>……//继续其它的通信</p>
+<p>【问题1】</p>
+<p>上面的通信过程中说到，在检查完证书后，“客户”发送一个随机的字符串给“服务器”去用私钥加密，以便判断对方是否真的持有私钥。但是有一个问题，“黑客”也可以发送一个字符串给“服务器”去加密并且得到加密后的内容，这样对于“服务器”来说是不安全的，因为黑客可以发送一些简单的有规律的字符串给“服务器”加密，从而寻找加密的规律，有可能威胁到私钥的安全。所以说，“服务器”随随便便用私钥去加密一个来路不明的字符串并把结果发送给对方是不安全的。</p>
+<p>〖解决方法〗</p>
+<p>每次收到“客户”发来的要加密的的字符串时，“服务器”并不是真正的加密这个字符串本身，而是把这个字符串进行一个hash计算，加密这个字符串的hash值(不加密原来的字符串)后发送给“客户”，“客户”收到后解密这个hash值并自己计算字符串的hash值然后进行对比是否一致。也就是说，“服务器”不直接加密收到的字符串，而是加密这个字符串的一个hash值，这样就避免了加密那些有规律的字符串，从而降低被破解的机率。“客户”自己发送的字符串，因此它自己可以计算字符串的hash值，然后再把“服务器”发送过来的加密的hash值和自己计算的进行对比，同样也能确定对方是否是“服务器”。</p>
+</blockquote>
+<p>有没有发现这个解决方法跟<strong>数字签名</strong>其实是一模一样的呢？O(∩_∩)O哈哈~</p>
+<ol start="12">
+<li><strong>鲍勃</strong>拿到数字证书以后，就可以放心了。以后再给<strong>苏珊</strong>写信，只要在签名的同时，再附上数字证书就行了。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/zymL7rTRfNkho59.png" alt="12.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<ol start="13">
+<li><strong>苏珊</strong>收信后，用CA的公钥解开数字证书，就可以拿到<strong>鲍勃</strong>真实的公钥了，然后就能证明“数字签名”是否真的是<strong>鲍勃</strong>签的。</li>
+</ol>
+<img src="https://i.loli.net/2020/10/16/LN6MSsqYbFCzX7T.png" alt="13.png" style="zoom:100%;" / loading="lazy">
+
+
+
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7.总结"></a>7.总结</h2><p>一路看来可以发现，安全的手段不断加强。经历了以下几个阶段</p>
+<ol>
+<li>最开始用<strong>对称算法</strong>进行保密，但是发现这样的安全性不是很高，除非每一个人都拥有属于自己的一对公密钥，但这样钥匙的管理会非常的庞大。</li>
+<li>出现更先进的<strong>非对称算法</strong>和<strong>Hash算法</strong>，但是信息安全并不只单单是信息内容安全，传输安全，完整性，不可否认性都要得到保障才行。所以<strong>单独</strong>靠<strong>加密算法</strong>是不能实现<code>100%安全</code>的。随着这些需求，数字签名，证书出现了</li>
+<li>虽然数字签名，证书出现，但是为了验证他们，使用的还是加密算法。所以需要非常明确的一点是<strong>数字签名和证书不是加密算法</strong>。他们是一种增加可信任的<strong>方法</strong>，如果出现一个<strong>绝对安全</strong>的<strong>加密算法</strong>时，那数字签名和证书也可以下岗了。</li>
+</ol>
+</div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">施主,贫僧化缘来了！</div><div id="qr" style="display:none;"><div style="display:inline-block"><a target="_blank" rel="noopener" href="http://qhrwcrmwk.hn-bkt.clouddn.com/zfb.jpg"><img loading="lazy" src="http://qhrwcrmwk.hn-bkt.clouddn.com/zfb.jpg" alt="支付宝" title="支付宝"></a><div><span style="color:#00A3EE"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-alipay-line"></use></svg></span></div></div><div style="display:inline-block"><a target="_blank" rel="noopener" href="http://qhrwcrmwk.hn-bkt.clouddn.com/vx.jpg"><img loading="lazy" src="http://qhrwcrmwk.hn-bkt.clouddn.com/vx.jpg" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>HighWay</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://iljava.gitee.io/2020/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Public%20Key%20Infrastructure/" title="Public Key Infrastructure">https://iljava.gitee.io/2020/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Public%20Key%20Infrastructure/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2020/10/15/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/sql%E6%B3%A8%E5%85%A5/GET%E5%9F%BA%E4%BA%8E%E6%8A%A5%E9%94%99%E7%9A%84%E6%B3%A8%E5%85%A5/" rel="next" title="GET基于报错的注入"><span class="post-nav-text">GET基于报错的注入</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div id="comment"><div class="comment-tooltip text-center"><span>尝试使用 Disqus 评论系统。</span><br><span>您可以点击下方按钮切换对应评论系统。</span><br><div class="toggle-comment-system" style="margin: 1rem auto"><a class="toggle-comment-btn hty-button hty-button--raised text-uppercase" data-target="#valine-container" onclick="showComment(this.dataset.target)">valine</a><style>#disqus_thread {
+  display: none;
+}</style><a class="toggle-comment-btn hty-button hty-button--raised text-uppercase" data-target="#disqus_thread" onclick="showComment(this.dataset.target)">disqusjs</a><script>function hideAllComment() {
+  //- hide all
+  document.querySelectorAll('.toggle-comment-btn').forEach((btn) => {
+    const container = document.querySelector(btn.dataset.target);
+    if (container) {
+      container.style.display = "none";
+    }
+  });
+}
+function showComment(target) {
+  hideAllComment();
+  //- show target
+  const targetContainer = document.querySelector(target);
+  if (targetContainer) {
+    targetContainer.style.display = "block";
+  }
+}
+</script></div></div><div id="disqus_thread"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@latest/dist/disqusjs.css"><script src="https://cdn.jsdelivr.net/npm/disqusjs@latest/dist/disqus.js"></script><script>const dsqjs = new DisqusJS({
+  shortname: 'yunyoujun',
+  apikey: 'ouoGQCaamOKdJgyZU5DKcpFnRIg3SNzvk0nwygPtlcTRJuE68c8igvrZGW4wAJoN',
+  url: 'https://iljava.gitee.io/2020/10/16/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/Public%20Key%20Infrastructure/'
+})
+</script><div id="valine-container"></div><script src="https://cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script><script>function initValine() {
+  const valineConfig = {"enable":true,"appId":"xlwSW83iKlOEww90sT4bxHEb-gzGzoHsz","appKey":"hfmNtwBPpnMtVLvhG6TQltLT","placeholder":"大佬求指教&nbsp_(:з」∠)_","avatar":null,"pageSize":10,"visitor":true,"highlight":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"emojiCDN":"//i0.hdslb.com/bfs/emote/","emojiMaps":{"tv_doge":"6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png","tv_亲亲":"a8111ad55953ef5e3be3327ef94eb4a39d535d06.png","tv_偷笑":"bb690d4107620f1c15cff29509db529a73aee261.png","tv_再见":"180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png","tv_冷漠":"b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png","tv_发怒":"34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png","tv_发财":"34db290afd2963723c6eb3c4560667db7253a21a.png","tv_可爱":"9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png","tv_吐血":"09dd16a7aa59b77baa1155d47484409624470c77.png","tv_呆":"fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png","tv_呕吐":"9f996894a39e282ccf5e66856af49483f81870f3.png","tv_困":"241ee304e44c0af029adceb294399391e4737ef2.png","tv_坏笑":"1f0b87f731a671079842116e0991c91c2c88645a.png","tv_大佬":"093c1e2c490161aca397afc45573c877cdead616.png","tv_大哭":"23269aeb35f99daee28dda129676f6e9ea87934f.png","tv_委屈":"d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png","tv_害羞":"a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png","tv_尴尬":"7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png","tv_微笑":"70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png","tv_思考":"90cf159733e558137ed20aa04d09964436f618a1.png","tv_惊吓":"0d15c7e2ee58e935adc6a7193ee042388adc22af.png","tv_打脸":"56ab10b624063e966bfcb76ea5dc4794d87dfd47.png","tv_抓狂":"fe31c08edad661d63762b04e17b8d5ae3c71a757.png","tv_抠鼻":"c666f55e88d471e51bbd9fab9bb308110824a6eb.png","tv_斜眼笑":"911f987aa8bc1bee12d52aafe62bc41ef4474e6c.png","tv_无奈":"ea8ed89ee9878f2fece2dda0ea8a5dbfe21b5751.png","tv_晕":"5443c22b4d07fb1907ccc610c8e6db254f2461b7.png","tv_流汗":"cead1c351ab8d79e9f369605beb90148db0fbed3.png","tv_流泪":"7e71cde7858f0cd50d74b0264aa26db612a8a167.png","tv_流鼻血":"c32d39db2737f89b904ca32700d140a9241b0767.png","tv_点赞":"f85c354995bd99e28fc76c869bfe42ba6438eff4.png","tv_生气":"26702dcafdab5e8225b43ffd23c94ac1ff932654.png","tv_生病":"8b0ec90e6b86771092a498c54f09fc94621c1900.png","tv_疑问":"0793d949b18d7be716078349c202c15ff166f314.png","tv_白眼":"c1d59f439e379ee50eef488bcb5e5378e5044ea4.png","tv_皱眉":"72ccad6679fea0d14cce648b4d818e09b8ffea2d.png","tv_目瞪口呆":"0b8cb81a68de5d5365212c99375e7ace3e7891b7.png","tv_睡着":"8b196675b53af58264f383c50ad0945048290b33.png","tv_笑哭":"1abc628f6d4f4caf9d0e7800878f4697abbc8273.png","tv_腼腆":"89712c0d4af73e67f89e35cbc518420380a7f6f4.png","tv_色":"61822c7e9aae5da76475e7892534545336b23a6f.png","tv_调侃":"4bc022533ef31544ca0d72c12c808cf4a1cce3e3.png","tv_调皮":"b9c41de8e82dd7a8515ae5e3cb63e898bf245186.png","tv_鄙视":"6e72339f346a692a495b123174b49e4e8e781303.png","tv_闭嘴":"c9e990da7f6e93975e25fd8b70e2e290aa4086ef.png","tv_难过":"87f46748d3f142ebc6586ff58860d0e2fc8263ba.png","tv_馋":"fc7e829b845c43c623c8b490ee3602b7f0e76a31.png","tv_鬼脸":"0ffbbddf8a94d124ca2f54b360bbc04feb6bbfea.png","tv_黑人问号":"45821a01f51bc867da9edbaa2e070410819a95b2.png","tv_鼓掌":"1d21793f96ef4e6f48b23e53e3b9e42da833a0f6.png"},"el":"#valine-container","lang":"zh-cn"}
+  valineConfig.path = window.location.pathname
+  new Valine(valineConfig)
+}
+setTimeout(initValine, 1000)</script></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2020 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> HighWay</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.2.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.2.0</span></div><div class="live_time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  window.setTimeout(blog_live_time, 1000);
+  const start = new Date('2020-10-05T21:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = " " + passDay + " 天 " + passHour + " 小时 " + passMinute + " 分 " + passSecond + " 秒";
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="goUp" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div><script defer src="/js/utils.js"></script><script defer src="/js/hexo-theme-yun.js"></script></body></html>
